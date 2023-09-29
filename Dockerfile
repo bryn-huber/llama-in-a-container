@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 # Update package lists and install necessary packages
 RUN apt-get update && \
-    apt-get install -y g++ python3 python3-pip git htop
+    apt-get install -y g++ python3 python3-pip git htop ca-certificates
 
 # Create a non-root user
 RUN useradd -ms /bin/bash llamauser
