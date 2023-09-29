@@ -37,4 +37,4 @@ jobs:
         run: docker build . --file Dockerfile --tag llama-in-a-container:$(date +%s)
         
       - name: Push Docker image
-        run: docker push lloydb2/llama-in-a-container
+        run: docker push $DOCKER_USERNAME/llama-in-a-container
