@@ -1,0 +1,40 @@
+name: Docker image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: GitHub Tag Name example
+        run: |
+          echo "Possiable other tagging options for Docker Image"
+
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+
+          echo "Tag name from GITHUB_SHA: $GITHUB_SHA"
+          echo "Tag name from github.sha: ${{ github.sha }}"
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag llama-in-a-container:$(date +%s)
+        
+      - name: Push Docker image
+        run: docker push $DOCKER_USERNAME/llama-in-a-container
