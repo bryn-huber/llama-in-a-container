@@ -34,7 +34,7 @@ jobs:
           echo "Tag name from github.sha: ${{ github.sha }}"
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag llama-in-a-container:$(date +%s)
+        run: docker build . --file Dockerfile --tag llama-2-model:$(date +%s)
         
       - name: Push Docker image
         run: docker push $DOCKER_USERNAME/llama-in-a-container
